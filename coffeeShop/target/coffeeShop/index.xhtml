@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+    <h:head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>coffeeShop</title>
+        <style type="text/css">
+            p {line-height: 1.5;
+                margin: 0;}
+        </style>
+        #{catalogBean.load}
+
+    </h:head>
+
+    <h:body style="background: #e4e7ef">
+
+        <p:toolbarGroup align="center">
+            <span style="font-weight: bold ; font-size: 40px; color: #164387">Coffee Shop</span>
+        </p:toolbarGroup>
+
+        <h:form style="background: #b5c0e0">
+            <h1 style="margin: 10px; color: #3e69ac">Menu</h1>
+            <p:fieldset style="background: #f0f4ff">
+                <div class="p-mb-3 demo-container">#{menuBean.coffeeInfo_1}</div>
+                <div class="p-mb-3 demo-container p-text-nowrap">#{menuBean.coffeeInfo_2}</div>
+            </p:fieldset>
+            <p:button style="margin: 5px" id="btnCatalog" value="Catalog" title=" title " outcome="catalog"/>
+            <p:button style="margin: 5px" id="btnMyOrder" value="Order #{orderBean.products.size()}" title=" title " outcome="order"/>
+
+        </h:form>
+
+    </h:body>
+</f:view>
+</html>

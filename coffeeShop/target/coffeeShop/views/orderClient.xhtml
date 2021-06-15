@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>coffeeShop</title>
+        <style type="text/css">
+            p {
+                line-height: 1.5;
+                margin: 0;
+            }
+        </style>
+    </h:head>
+
+    <h:body style="background: #e4e7ef">
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+                <p:toolbar style="color: #8b9dd9">
+                    <p:toolbarGroup align="center">
+                        <span style="font-weight: bold ; font-size: 40px">Your orders:</span>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup>
+                        <p:button style="margin: 5px" id="btnOrder" value="catalog" title=" title " outcome="catalog"/>
+                        <p:button style="margin: 5px" id="btnCatalog" value="menu" title=" title " outcome="menu"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+                <p:dataTable id="dt-products" widgetVar="dtProducts" var="product" value="#{orderBean.products}"
+                             reflow="true" styleClass="products-table"
+                             paginator="true"
+                             rows="10"  paginatorPosition="bottom">
+
+                    <p:column headerText="">
+                    </p:column>
+
+                    <p:column headerText="Image" exportable="false">
+                        <p:graphicImage style="height: 40px" url="#{product.url}" library="demo"
+                                        styleClass="product-image"/>
+                    </p:column>
+
+                    <p:column headerText="Name" sortBy="#{product.nameCoffee}">
+                        <h:outputText value="#{product.nameCoffee}"/>
+                    </p:column>
+                    <p:column headerText="manufacturer" sortBy="#{product.manufacturer}">
+                        <h:outputText value="#{product.manufacturer}"/>
+                    </p:column>
+
+                    <p:column headerText="Sort" sortBy="#{product.grainGrade}">
+                        <h:outputText value="#{product.grainGrade}"/>
+                    </p:column>
+
+                    <p:column headerText="net weight" sortBy="#{product.netWeight}">
+                        <h:outputText value="#{product.netWeight}" style="font-weight: 700">
+                            <f:convertNumber currencySymbol="g" type="currency"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Price" sortBy="#{product.price}">
+                        <h:outputText value="#{product.priceTotal}" style="font-weight: 700">
+                            <f:convertNumber currencySymbol="p" type="currency"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column>
+                        <p:commandButton style="margin: 2px" icon="pi pi-pencil"></p:commandButton>
+                        <p:commandButton style="margin: 2px" action="order" icon="pi pi-trash" update="dt-products">
+                            <f:setPropertyActionListener value="#{product}" target="#{orderBean.product}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+                <p:toolbar style="color: #8b9dd9">
+                    <p:toolbarGroup align="right">
+                        <p:button style="margin: 5px" id="btnOrderOK" value="Buy" title=" title " onclick="PF('dlg1').show()"/>
+
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <strong>price total: #{orderBean.totalPrice}p </strong>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </div>
+
+            <p:dialog id="buyDialog" header="Your data:" widgetVar="dlg1" showEffect="fade">
+                <div class="card">
+                    <h:form>
+                        <h:panelGrid id="grid" columns="3" cellpadding="7">
+                            <div>
+                                <p:outputLabel for="name" value="Name: "/>
+                                <p:inputText id="name" value="#{orderBean.client.name}" required="true"/>
+                            </div>
+                           <div>
+                               <p:outputLabel for="phone" value="Phone:"/>
+                               <p:inputText id="phone" value="#{orderBean.client.phone}" required="true"/>
+                           </div>
+                            <div>
+                                <p:outputLabel for="email" value="Email:"/>
+                                <p:inputText id="email" value="#{orderBean.client.email}" required="true"/>
+                            </div>
+                            <div>
+                                <h3 class="p-text">
+                                    <h:outputText value="Delivery:  "/>
+                                </h3>
+                                <p:toggleSwitch value="#{orderBean.delivery}">
+                                    <p:ajax update="price_total" process="@this" />
+                                </p:toggleSwitch>
+
+                            </div>
+                            <div >
+                                <h:outputText id="price_total" value="Total price: #{orderBean.product.priceTotal}p"/>
+                            </div>
+                        </h:panelGrid>
+                        <div>
+
+                            <p:commandButton style="margin: 5px" action="order" value="Cancel" icon="pi pi-times" styleClass="ui-button-danger"/>
+                            <p:commandButton style="margin: 5px" action="menu" value="Buy" icon="pi pi-check" styleClass="p-mr-2"  >
+                                #{orderBean.saveOrder()}
+                            </p:commandButton>
+                        </div>
+
+                    </h:form>
+                </div>
+            </p:dialog>
+        </h:form>
+
+
+    </h:body>
+</f:view>
+
+</html>

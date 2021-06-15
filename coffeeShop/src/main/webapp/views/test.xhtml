@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>coffeeShop</title>
+        <style type="text/css">
+            p {
+                line-height: 1.5;
+                margin: 0;
+            }
+        </style>
+    </h:head>
+
+    <h:body style="background: #e4e7ef">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+                <p:toolbar style="color: #8b9dd9">
+                    <p:toolbarGroup align="center">
+                        <span style="font-weight: bold ; font-size: 40px">Your orders:</span>
+                    </p:toolbarGroup>
+                    <p:toolbarGroup>
+                        <p:button style="margin: 5px" id="btnOrder" value="order #{orderBean.products.size()}"
+                                  title=" title " outcome="order"/>
+                        <p:button style="margin: 5px" id="btnCatalog" value="menu" title=" title " outcome="menu"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </div>
+        <p:commandButton style="margin-top: 5px" action="catalog" value="Add To Cart" icon="pi pi-shopping-cart">
+            #{orderBean.addProduct(orderBean.product)}
+        </p:commandButton>
+
+
+
+
+
+    </h:body>
+</f:view>
+</html>

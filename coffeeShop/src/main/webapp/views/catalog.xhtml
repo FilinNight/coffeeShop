@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>coffeeShop</title>
+        <style type="text/css">
+            p {
+                line-height: 1.5;
+                margin: 0;
+            }
+        </style>
+    </h:head>
+
+    <h:body style="background: #e4e7ef">
+
+        <h:form id="formCatalog">
+            <div class="p-shadow-3">
+                <p:toolbar >
+                    <p:toolbarGroup align="center">
+                        <span style="font-weight: bold ; font-size: 40px">Catalog:</span>
+                    </p:toolbarGroup>
+                     <p:toolbarGroup>
+                         <p:button style="margin: 5px" id="btnOrder" value="order #{orderBean.products.size()}" title=" title " outcome="order"/>
+                         <p:button style="margin: 5px" id="btnCatalog" value="menu" title=" title " outcome="menu"/>
+                     </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:dataView style="margin-bottom: 2em; margin-left: 70px; margin-right: 70px; width: auto" var="product"
+                            value="#{catalogBean.products}" rows="12"
+                            paginator="true"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                            layout="grid">
+
+                    <p:dataViewGridItem columns="4">
+                        <div style="display: inline-block; vertical-align: top; "
+                             class="p-shadow-2">
+                            <p:card style="width: 20rem; margin-bottom: 2em;">
+
+                                <f:facet name="title">
+                                    #{product.nameCoffee}
+                                </f:facet>
+                                <div class="product-grid-item-content">
+                                    <p:graphicImage
+                                            style="position: center"
+                                            height="170" url="#{product.url}" library="demo"/>
+                                    <div class="product-manufacturer">Изготовитель: #{product.manufacturer}</div>
+                                    <div class="product-grainGrade">Сорт: #{product.grainGrade}</div>
+                                    <div class="product-degreeOfRoast">Обжарка: #{product.degreeOfRoast}</div>
+                                    <h:outputText value="Цена за кг: #{product.price}р." styleClass="product-price"/>
+                                </div>
+                                <div class="product-grid-item-bottom">
+                                    <p:commandButton style="margin-top: 15px" action="checkout" value="Add To Cart" icon="pi pi-shopping-cart">
+                                        <f:setPropertyActionListener value="#{product}" target="#{orderBean.product}"/>
+                                    </p:commandButton>
+                                    <p:commandButton style="margin: 3px" icon="pi pi-info" styleClass="rounded-button" type="button" onclick="PF('dlg1').show()" update="formCatalog">
+                                        <f:setPropertyActionListener value="#{product.information}" target="#{orderBean.product.information}"/>
+                                    </p:commandButton>
+                                </div>
+
+                            </p:card>
+                        </div>
+                        <p:dialog id="infoDialog" header="About coffee:" widgetVar="dlg1" minHeight="40" width="350" showEffect="fade">
+                            <p class="p-m-0">#{product.information}</p>
+                        </p:dialog>
+
+                    </p:dataViewGridItem>
+                </p:dataView>
+            </div>
+        </h:form>
+    </h:body>
+</f:view>
+
+</html>

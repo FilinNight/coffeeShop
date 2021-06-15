@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>coffeeShop</title>
+        <style type="text/css">
+            p {
+                line-height: 1.5;
+                margin: 0;
+            }
+
+        </style>
+    </h:head>
+
+    <h:body style="background: #e4e7ef">
+
+        <h:form>
+            <p:toolbar>
+                <p:toolbarGroup align="center">
+                    <span style="font-weight: bold ; font-size: 40px">Checkout:</span>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button style="margin: 5px" id="btnCatalog" value="catalog" title=" title " outcome="catalog"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <div style="display: inline-block">
+                <p:card id="card1" style="margin: 5px;">
+                    <f:facet name="title">
+                        #{orderBean.product.nameCoffee}
+                    </f:facet>
+
+                <div style="display: inline-block; width: 20rem">
+                        <div style="margin: 5px" class="product-grid-item-content">
+                            <p:graphicImage
+                                    style="position: center; margin: 5px"
+                                    height="170" url="#{orderBean.product.url}" library="demo"/>
+                            <div style="margin: 2px"
+                                 class="product-manufacturer">
+                                <strong>Manufacturer: </strong>
+                                #{orderBean.product.manufacturer}</div>
+                            <div style="margin: 2px"
+                                 class="product-Grown">
+                                <strong>Grown: </strong>
+                                #{orderBean.product.grow}</div>
+                            <div style="margin: 2px" class="product-grainGrade">
+                                <strong>Sort: </strong>
+                                #{orderBean.product.grainGrade}</div>
+                            <div style="margin: 2px"
+                                 class="product-degreeOfRoast">
+                                <strong>degree of roast: </strong>
+                                #{orderBean.product.degreeOfRoast}</div>
+                        </div>
+                </div>
+                <div style="display: inline-block; margin: 5px; width: 20rem">
+
+                        <div style="margin: 2px" > <strong>Info:</strong> </div>
+                        <div style="margin: 2px" >#{orderBean.product.information}</div>
+
+                </div>
+
+                <div style="display: inline-block; margin-left: 40px">
+                    <h3 class="p-text">
+                        <h:outputText style="margin: 2px;" value="Price (kg): #{orderBean.product.price}р."
+                                      styleClass="product-price"/>
+                    </h3>
+                    <div class="p-field p-col-12 p-md-4">
+                        <h3 class="p-text">
+                            <h:outputText value="Net weight(gram): "/>
+                        </h3>
+                        <p:spinner id="rounded" value="#{orderBean.product.netWeight}" min="100" max="5000" stepFactor="100">
+                            <p:ajax update="price_total" process="@this" />
+                        </p:spinner>
+                    </div>
+
+                    <div style="margin: 2px">
+                        <h2 class="p-text">
+                            <h:outputText id="price_total" value="#{orderBean.product.priceTotal}"/>p
+                        </h2>
+                    </div>
+                    <div>
+
+                        <p:commandButton style="margin-top: 5px" action="catalog" value="Add To Cart" icon="pi pi-shopping-cart">
+                            #{orderBean.addProduct(orderBean.product)}
+                        </p:commandButton>
+
+                    </div>
+
+                </div>
+                </p:card>
+            </div>
+
+
+        </h:form>
+    </h:body>
+
+</f:view>
+</html>
